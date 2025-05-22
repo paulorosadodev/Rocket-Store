@@ -2,10 +2,10 @@ import styled, { keyframes } from "styled-components";
 
 export const CartModalWrapper = styled.div`
     position: absolute;
-    top: 48px;
+    top: 3rem;
     right: 0;
     z-index: 1100;
-    width: 360px;
+    width: 22.5rem;
     max-width: 90vw;
 `;
 
@@ -42,8 +42,8 @@ export const ModalTitle = styled.h2`
 
 export const ModalClose = styled.button`
     position: absolute;
-    top: 18px;
-    right: 24px;
+    top: 1.125rem;
+    right: 1.5rem;
     background: none;
     border: none;
     font-size: 1.5rem;
@@ -53,4 +53,61 @@ export const ModalClose = styled.button`
     &:hover {
         color: ${({ theme }) => theme["purple-300"]};
     }
+`;
+
+export const CartList = styled.ul`
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+`;
+
+export const CartListItem = styled.li`
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+`;
+
+export const CartItemImage = styled.img`
+    width: 3rem;
+    height: 3rem;
+    object-fit: contain;
+    margin-right: 0.75rem;
+    border-radius: 6px;
+    background: #222;
+`;
+
+export const CartItemInfo = styled.div`
+    flex: 1;
+`;
+
+export const CartItemTitle = styled.div`
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9375rem;
+`;
+
+export const CartItemQuantity = styled.div`
+    color: #aaa;
+    font-size: 0.8125rem;
+`;
+
+export const CartItemPrice = styled.div`
+    color: #b9a8ea;
+    font-weight: 700;
+    font-size: 0.875rem;
+`;
+
+export const RemoveButton = styled.button`
+    background: none;
+    border: none;
+    color: #d64550;
+    font-size: 1.125rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+`;
+
+export const EmptyCartText = styled.p`
+    color: #aaa;
+    margin: 1rem 0;
 `;

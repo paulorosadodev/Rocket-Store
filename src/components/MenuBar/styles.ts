@@ -7,9 +7,15 @@ export const MenuBarWrapper = styled.div`
     align-items: center;
     padding: 0rem 3rem;
     background-color: ${props => props.theme["purple-900"]};
+    height: 8rem;
+    min-height: 8rem;
 
-    img {
-        width: 10rem;
+    .logo-clickable {
+        height: 8rem;
+        width: auto;
+        cursor: pointer;
+        transition: filter 0.2s;
+        display: block;
     }
 
 `;

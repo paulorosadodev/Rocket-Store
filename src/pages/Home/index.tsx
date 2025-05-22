@@ -1,12 +1,61 @@
+import type { Product } from "../../@types";
+
 import { HomeWrapper } from "./styles";
-import { useCart } from "../../hooks/useCart";
+
+import { ProductCarousel } from "../../components/ProductCarousel";
+
+import { useProducts } from "../../hooks/useProducts";
 
 export const Home = () => {
-    const { incrementCart } = useCart();
+    const { products, loading, error } = useProducts();
+
+    const groupedProducts: Record<string, Product[]> = {
+        "Vestuário": [],
+        "Eletrônicos": [],
+        "Joalheria": [],
+    };
+
+    products.forEach((product) => {
+        if (
+            product.category === "men's clothing" ||
+            product.category === "women's clothing"
+        ) {
+            groupedProducts["Vestuário"].push(product);
+        } else if (product.category === "electronics") {
+            groupedProducts["Eletrônicos"].push(product);
+        } else if (product.category === "jewelery") {
+            groupedProducts["Joalheria"].push(product);
+        }
+    });
+
+    const orderedCategories = ["Vestuário", "Eletrônicos", "Joalheria"];
+
     return (
         <HomeWrapper>
-            <h1>Welcome to the Home Page</h1>
-            <button onClick={incrementCart} style={{marginTop: 16, padding: "8px 16px", borderRadius: 4, background: "#8257e6", color: "#fff", border: "none", cursor: "pointer"}}>Adicionar ao carrinho</button>
+            {loading && (
+                <>
+                    {[...Array(3)].map((_, i) => (
+                        <ProductCarousel
+                            key={i}
+                            title={" "}
+                            products={[]}
+                            skeleton
+                        />
+                    ))}
+                </>
+            )}
+            {error && <p>{error}</p>}
+            {!loading && !error &&
+                orderedCategories.map((category) =>
+                    groupedProducts[category].length > 0 ? (
+                        <ProductCarousel
+                            key={category}
+                            title={category}
+                            products={groupedProducts[category]}
+                        />
+                    ) : null
+                )
+            }
         </HomeWrapper>
     );
 };
