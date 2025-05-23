@@ -48,9 +48,9 @@ export const ModalContent = styled.div<{ isMobile?: boolean }>`
     position: relative;
     width: 100%;
     max-width: ${props => props.isMobile ? "100%" : "32rem"};
-    height: ${props => props.isMobile ? "100vh" : "auto"};
-    max-height: ${props => props.isMobile ? "100vh" : "50vh"};
-    overflow-y: auto;
+    height: ${props => props.isMobile ? "100vh" : "26rem"};
+    max-height: ${props => props.isMobile ? "100vh" : "32rem"};
+    overflow: hidden;
 `;
 
 export const ModalTitle = styled.h2<{ isMobile?: boolean }>`
@@ -87,13 +87,13 @@ export const CartList = styled.ul<{ isMobile?: boolean }>`
     padding: 0;
     margin: 0;
     list-style: none;
-    max-height: ${props => props.isMobile ? "calc(100vh - 15rem)" : "25vh"};
+    flex: 1 1 auto;
+    max-height: unset;
+    min-height: 0;
     overflow-y: auto;
     padding-right: 1rem;
-    
     scrollbar-width: thin;
     scrollbar-color: ${({ theme }) => theme["purple-200"]} ${({ theme }) => theme["surface"]};
-
     &::-webkit-scrollbar {
         width: 8px;
         background: ${({ theme }) => theme["surface"]};
@@ -156,11 +156,19 @@ export const RemoveButton = styled.button`
 `;
 
 export const EmptyCartText = styled.p<{ isMobile?: boolean }>`
-    color: ${({ theme }) => theme["gray-200"]};
-    margin: ${props => props.isMobile ? "3rem 0" : "1rem 0"};
-    width: 100%;
     text-align: center;
-    font-size: ${props => props.isMobile ? "1.125rem" : "1rem"};
+    width: 100%;
+    margin: 3rem 0 2rem 0;
+    color: ${({ theme }) => theme["gray-200"]};
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 8rem;
+    ${props => props.isMobile && `
+        font-size: 1.1rem;
+        margin: 2rem 0 1.5rem 0;
+    `}
 `;
 
 export const CartActionsWrapper = styled.div<{ isMobile?: boolean }>`
