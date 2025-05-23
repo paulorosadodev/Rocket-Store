@@ -2,27 +2,22 @@ import { SkeletonImageContainer } from "../../../components/ProductImageContaine
 
 import * as S from "./styles";
 
-import { useWindowSize } from "../../../hooks/useWindowSize";
-
 export function ProductDetailsSkeleton() {
-
-    const { isMobile } = useWindowSize();
-    
     return (
         <S.SkeletonDetailsWrapper>
             <SkeletonImageContainer size="large" />
             <S.SkeletonContentContainer>
                 <S.SkeletonTitle />
                 <S.SkeletonDescription />
-                <S.SkeletonDescription style={{ width: isMobile ? "90%" : "80%" }} />
-                <S.SkeletonDescription style={{ width: isMobile ? "85%" : "75%" }} />
-                <S.SkeletonPrice />
-                <S.SkeletonActions>
-                    <S.SkeletonButton style={{ width: isMobile ? "100%" : "9rem" }} />
-                    <S.SkeletonButton style={{ width: isMobile ? "100%" : "13rem" }} />
-                </S.SkeletonActions>
+                <S.SkeletonDescription style={{ width: "80%" }} />
+                <S.SkeletonDescription style={{ width: "75%" }} />
             </S.SkeletonContentContainer>
+            <S.SkeletonActionsWrapper>
+                <S.SkeletonActions>
+                    <S.SkeletonBuyButton />
+                    <S.SkeletonAddToCartButton />
+                </S.SkeletonActions>
+            </S.SkeletonActionsWrapper>
         </S.SkeletonDetailsWrapper>
     );
-
 }

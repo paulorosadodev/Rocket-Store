@@ -1,6 +1,6 @@
 import { ThemeProvider } from "styled-components";
 
-import { Router } from "./Router";
+import { Router } from "./router";
 
 import { CartProvider } from "./context/CartContext";
 

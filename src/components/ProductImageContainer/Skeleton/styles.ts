@@ -35,6 +35,45 @@ export const SkeletonImageContainer = styled.div<SkeletonImageContainerProps>`
     position: relative;
     overflow: hidden;
     margin-bottom: ${props => props.size === "small" ? "0" : "1rem"};
+    
+    @media (max-width: 768px) {
+        width: ${props => {
+        switch (props.size) {
+        case "small": return "5rem";
+        case "large": return "16rem"; 
+        case "medium":
+        default: return "10rem";
+        }
+    }};
+        height: ${props => {
+        switch (props.size) {
+        case "small": return "5rem";
+        case "large": return "16rem";
+        case "medium":
+        default: return "10rem";
+        }
+    }};
+    }
+    
+    @media (max-width: 480px) {
+        width: ${props => {
+        switch (props.size) {
+        case "small": return "4.5rem";
+        case "large": return "12rem"; 
+        case "medium":
+        default: return "8rem";
+        }
+    }};
+        height: ${props => {
+        switch (props.size) {
+        case "small": return "4.5rem";
+        case "large": return "12rem";
+        case "medium":
+        default: return "8rem";
+        }
+    }};
+        margin-bottom: ${props => props.size === "small" ? "0" : "0.75rem"};
+    }
 
     &::after {
         content: "";

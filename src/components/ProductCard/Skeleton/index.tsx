@@ -5,12 +5,13 @@ import { SkeletonImageContainer } from "../../ProductImageContainer/Skeleton/sty
 export function ProductCardSkeleton() {
     return (
         <S.SkeletonCardWrapper>
-            <SkeletonImageContainer size="small" />
-            <S.SkeletonLine width="90%" height="1.2rem" />
-            <S.SkeletonLine width="60%" height="1.1rem" />
-            <S.SkeletonLine width="70%" height="1.1rem" style={{ marginTop: "auto" }} />
-            <S.SkeletonButton />
-            <S.SkeletonButton style={{ marginBottom: 0 }} />
+            <SkeletonImageContainer size="medium" />
+            <S.SkeletonTitle />
+            <S.SkeletonPrice />
+            <S.SkeletonButtonsContainer>
+                <S.SkeletonBuyNowButton />
+                <S.SkeletonAddToCartButton />
+            </S.SkeletonButtonsContainer>
         </S.SkeletonCardWrapper>
     );
 }
