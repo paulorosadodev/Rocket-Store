@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { CheckCircle } from "@phosphor-icons/react";
+import { CheckCircleIcon } from "@phosphor-icons/react";
 
 const fadeInOut = keyframes`
     0% { opacity: 0; transform: translateY(20px) scale(0.98); }
@@ -8,7 +8,7 @@ const fadeInOut = keyframes`
     100% { opacity: 0; transform: translateY(20px) scale(0.98); }
 `;
 
-export const ToastIcon = styled(CheckCircle)<{ $variant?: "success" | "cart" }>`
+export const ToastIcon = styled(CheckCircleIcon)<{ $variant?: "success" | "cart" }>`
     flex-shrink: 0;
     height: 2rem;
     width: 2rem;

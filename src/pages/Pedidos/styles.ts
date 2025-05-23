@@ -119,30 +119,30 @@ export const PedidoDate = styled.span`
 `;
 
 export const PedidoProdutos = styled.div`
-    margin: 10px 0;
-    width: 100%;
-    
-    @media (max-width: 768px) {
-        max-height: 50vh;
-        overflow-y: auto;
+    max-height: 260px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    margin-bottom: 1rem;
 
-        &::-webkit-scrollbar {
-            width: 4px;
-            background: ${({ theme }) => theme["surface"]};
-            border-radius: 2px;
-        }
-        
-        &::-webkit-scrollbar-thumb {
-            background: ${({ theme }) => theme["purple-200"]};
-            border-radius: 2px;
-        }
-        
-        scrollbar-width: thin;
-        scrollbar-color: ${({ theme }) => theme["purple-200"]} ${({ theme }) => theme["surface"]};
+    scrollbar-width: thin;
+    scrollbar-color: ${({ theme }) => theme["purple-200"]} ${({ theme }) => theme["surface"]};
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        background: ${({ theme }) => theme["surface"]};
+        border-radius: 8px;
     }
-    
-    @media (max-width: 480px) {
-        margin: 15px 0 5px 0;
+    &::-webkit-scrollbar-thumb {
+        background: ${({ theme }) => theme["purple-200"]};
+        border-radius: 8px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: ${({ theme }) => theme["purple-300"]};
+    }
+
+    @media (max-width: 600px) {
+        max-height: 160px;
+        padding-right: 0.25rem;
     }
 `;
 
@@ -284,22 +284,30 @@ export const PedidoFooterTotal = styled.span`
 `;
 
 export const PedidoListWrapper = styled.div`
-    width: 100%;
-    padding: 0 10%;
-    margin-top: 24px;
-    box-sizing: border-box;
-    
-    @media (max-width: 992px) {
-        padding: 0 5%;
+    max-height: 65vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    width: 80%;
+
+    scrollbar-width: thin;
+    scrollbar-color: ${({ theme }) => theme["purple-200"]} ${({ theme }) => theme["surface"]};
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        background: ${({ theme }) => theme["surface"]};
+        border-radius: 8px;
     }
-    
-    @media (max-width: 768px) {
-        padding: 0 2rem;
+    &::-webkit-scrollbar-thumb {
+        background: ${({ theme }) => theme["purple-200"]};
+        border-radius: 8px;
     }
-    
-    @media (max-width: 480px) {
-        padding: 0 1rem;
-        margin-top: 16px;
+    &::-webkit-scrollbar-thumb:hover {
+        background: ${({ theme }) => theme["purple-300"]};
+    }
+
+    @media (max-width: 600px) {
+        max-height: 60vh;
+        padding-right: 0.25rem;
     }
 `;
 
