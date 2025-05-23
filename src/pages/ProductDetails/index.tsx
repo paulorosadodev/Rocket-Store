@@ -21,6 +21,7 @@ import { ProductDetailsSkeleton } from "./Skeleton";
 import rocket  from "../../assets/rocket.png";
 
 import { formatPrice } from "../../utils/formatPrice";
+import { ErrorState } from "../../components/ErrorState";
 
 export function ProductDetails() {
 
@@ -49,8 +50,8 @@ export function ProductDetails() {
                 setLoading(false);
                 setProductDetailsCache(Number(id), data);
             })
-            .catch(() => {
-                setError("Erro ao carregar produto");
+            .catch((e) => {
+                setError(e.message);
                 setLoading(false);
             });
     }, [id]);
@@ -83,11 +84,14 @@ export function ProductDetails() {
 
     if (loading) return <ProductDetailsSkeleton />;
 
-    if (error || !product)
+    if (error)
+        return <ErrorState message={"Erro ao carregar produto"} error={error} />;
+
+    if (!product)
         return (
             <S.ProductNotFoundWrapper>
                 <img src={rocket} alt="Rocket Store Logo" />
-                <h1>{error || "Produto não encontrado"}</h1>
+                <h1>Produto não encontrado</h1>
             </S.ProductNotFoundWrapper>
         );
 

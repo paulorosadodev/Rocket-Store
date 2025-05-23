@@ -1,21 +1,5 @@
 import styled from "styled-components";
 
-export const HomeWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 2rem;
-    
-    @media (max-width: 768px) {
-        padding-bottom: 1.5rem;
-    }
-    
-    @media (max-width: 480px) {
-        padding-bottom: 1rem;
-    }
-`;
-
 export const ErrorContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -54,7 +38,6 @@ export const RetryButton = styled.button`
     border: none;
     border-radius: 8px;
     padding: 0.75rem 2rem;
-    margin-top: 2rem;
     font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
@@ -62,4 +45,10 @@ export const RetryButton = styled.button`
     &:hover {
         background: ${({ theme }) => theme["purple-300"]};
     }
+`;
+
+export const ErrorMessage = styled.p`
+    color: ${({ theme }) => theme["gray-500"]};
+    margin: 0.5rem 0 1.5rem 0;
+    word-break: break-word;
 `;

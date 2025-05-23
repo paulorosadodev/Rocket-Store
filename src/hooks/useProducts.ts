@@ -32,9 +32,9 @@ export function useProducts() {
                     setProductsCache(data);
                 }
             })
-            .catch(() => {
+            .catch((e) => {
                 if (isMounted) {
-                    setError("Erro ao carregar produtos");
+                    setError(e.message);
                     setLoading(false);
                 }
             });

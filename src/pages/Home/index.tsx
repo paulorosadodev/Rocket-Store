@@ -5,6 +5,7 @@ import type { Product } from "../../@types";
 import * as S from "./styles";
 
 import { ProductCarousel } from "../../components/ProductCarousel";
+import { ErrorState } from "../../components/ErrorState";
 
 import { useProducts } from "../../hooks/useProducts";
 
@@ -32,7 +33,9 @@ export const Home = () => {
                     ))}
                 </>
             )}
-            {error && <p>{error}</p>}
+            {error && (
+                <ErrorState message="Ocorreu um erro ao carregar os produtos" error={error} />
+            )}
             {!loading && !error &&
                 orderedCategories.map((category) =>
                     groupedProducts[category].length > 0 ? (
