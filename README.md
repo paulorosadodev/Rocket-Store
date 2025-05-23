@@ -1,6 +1,10 @@
-# 🚀 Rocket Store
+![banner](https://github.com/user-attachments/assets/f0f99488-2adf-40f3-a077-0cf2b097fd1c)
 
 Rocket Store é uma aplicação web de e-commerce moderna e responsiva, construída com React e TypeScript. Oferece uma experiência de compra fluida, com foco em performance, acessibilidade e design intuitivo. O projeto demonstra boas práticas em UI/UX, gerenciamento de estado, tratamento de erros e feedback ao usuário.
+
+---
+
+<br>
 
 ## 🛠️ Tecnologias Utilizadas
 
