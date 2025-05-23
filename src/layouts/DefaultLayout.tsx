@@ -1,6 +1,10 @@
-import styled from "styled-components";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+
+import styled from "styled-components";
+
 import { MenuBar } from "../components/MenuBar";
+import { SuccessToast } from "../components/SuccessToast";
 
 const LayoutContainer = styled.div`
     display: flex;
@@ -14,12 +18,16 @@ const Main = styled.main`
 `;
 
 export function DefaultLayout() {
+
+    const [toast, setToast] = useState<string | null>(null);
+
     return (
         <LayoutContainer>
-            <MenuBar />
+            <MenuBar setToast={setToast} />
             <Main>
-                <Outlet />
+                <Outlet context={{ setToast }} />
             </Main>
+            {toast && <SuccessToast message={toast} onClose={() => setToast(null)} />}
         </LayoutContainer>
     );
 }

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 import type { Product } from "../@types";
 
-import { fetchProducts } from "../services/products";
+import { fetchProducts } from "../services/api/products";
+import { getProductsCache, setProductsCache } from "../services/storage/productCacheStorage";
 
 export function useProducts() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -12,27 +13,18 @@ export function useProducts() {
     useEffect(() => {
         let isMounted = true;
         setLoading(true);
-        const cacheKey = "products_cache_v1";
-        const cache = localStorage.getItem(cacheKey);
-        const now = Date.now();
-        if (cache) {
-            try {
-                const { data, timestamp } = JSON.parse(cache);
-                if (now - timestamp < 10 * 60 * 1000) { 
-                    setProducts(data);
-                    setLoading(false);
-                    return;
-                }
-            } catch {
-                // Se falhar o parse, ignora e faz fetch normalmente
-            }
+        const cached = getProductsCache();
+        if (cached) {
+            setProducts(cached);
+            setLoading(false);
+            return;
         }
         fetchProducts()
             .then((data) => {
                 if (isMounted) {
                     setProducts(data);
                     setLoading(false);
-                    localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: now }));
+                    setProductsCache(data);
                 }
             })
             .catch(() => {

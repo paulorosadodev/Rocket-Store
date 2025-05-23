@@ -1,4 +1,5 @@
 import type { Product } from "../../@types";
+import { useOutletContext } from "react-router-dom";
 
 import { HomeWrapper } from "./styles";
 
@@ -8,6 +9,7 @@ import { useProducts } from "../../hooks/useProducts";
 
 export const Home = () => {
     const { products, loading, error } = useProducts();
+    const outletContext = useOutletContext<{ setToast: (msg: string) => void }>();
 
     const groupedProducts: Record<string, Product[]> = {
         "Vestuário": [],
@@ -52,6 +54,7 @@ export const Home = () => {
                             key={category}
                             title={category}
                             products={groupedProducts[category]}
+                            outletContext={outletContext}
                         />
                     ) : null
                 )

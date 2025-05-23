@@ -26,12 +26,12 @@ export const SkeletonCardWrapper = styled.div`
     box-sizing: border-box;
 `;
 
-export const SkeletonImage = styled.div`
-    width: 7.5rem;
-    height: 7.5rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+export const SkeletonLine = styled.div<{ width?: string, height?: string }>`
+    width: ${({ width }) => width || "80%"};
+    height: ${({ height }) => height || "1.2rem"};
+    border-radius: 6px;
     background: #222;
+    margin-bottom: 0.7rem;
     position: relative;
     overflow: hidden;
     &::after {
@@ -48,12 +48,12 @@ export const SkeletonImage = styled.div`
     }
 `;
 
-export const SkeletonLine = styled.div<{ width?: string, height?: string }>`
-    width: ${({ width }) => width || "80%"};
-    height: ${({ height }) => height || "1.2rem"};
-    border-radius: 6px;
+export const SkeletonButton = styled.div`
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 8px;
     background: #222;
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.5rem;
     position: relative;
     overflow: hidden;
     &::after {

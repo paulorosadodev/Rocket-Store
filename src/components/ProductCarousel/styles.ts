@@ -10,6 +10,24 @@ export const CarouselWrapper = styled.div`
     &:last-child {
         margin-bottom: 4rem;
     }
+    
+    @media (max-width: 768px) {
+        width: 90%;
+        margin-top: 2.5rem;
+        
+        &:last-child {
+            margin-bottom: 3rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        width: 95%;
+        margin-top: 2rem;
+        
+        &:last-child {
+            margin-bottom: 2.5rem;
+        }
+    }
 `;
 
 export const CarouselTitle = styled.h2`
@@ -19,6 +37,17 @@ export const CarouselTitle = styled.h2`
     margin-bottom: 1rem;
     width: 100%;
     text-align: left;
+    
+    @media (max-width: 768px) {
+        font-size: 1.4rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        padding-left: 0.5rem;
+    }
 `;
 
 export const CarouselContainer = styled.div`
@@ -27,7 +56,15 @@ export const CarouselContainer = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    `;
+    
+    @media (max-width: 768px) {
+        max-width: 90vw;
+    }
+    
+    @media (max-width: 480px) {
+        max-width: 95vw;
+    }
+`;
 
 export const CarouselInner = styled.div`
     display: flex;
@@ -49,6 +86,17 @@ export const CarouselItem = styled.div`
     display: flex;
     justify-content: center;
     align-items: stretch;
+    
+    @media (max-width: 768px) {
+        width: 14rem;
+        margin: 8px;
+    }
+    
+    @media (max-width: 480px) {
+        width: 10rem;
+        margin: 6px;
+        padding: 6px 0;
+    }
 `;
 
 export const CarouselButton = styled.button`
@@ -68,6 +116,15 @@ export const CarouselButton = styled.button`
         background: ${({ theme }) => theme["purple-100"]};
         opacity: 1;
     }
+    
+    @media (max-width: 768px) {
+        padding: 0.2rem;
+    }
+    
+    @media (max-width: 480px) {
+        padding: 0.15rem;
+        margin: 0 0.25rem;
+    }
 `;
 
 export const CarouselSideHover = styled.div<{ side: "left" | "right" }>`
@@ -86,5 +143,13 @@ export const CarouselSideHover = styled.div<{ side: "left" | "right" }>`
         rgba(20,18,28,0.0) 100%
     );
     pointer-events: all;
+    
+    @media (max-width: 768px) {
+        width: 2.5rem;
+    }
+    
+    @media (max-width: 480px) {
+        width: 2rem;
+    }
 `;
 
