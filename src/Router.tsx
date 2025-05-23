@@ -5,6 +5,7 @@ import { DefaultLayout } from "./layouts/DefaultLayout";
 import { Home } from "./pages/Home";
 import Pedidos from "./pages/Pedidos";
 import { ProductDetails } from "./pages/ProductDetails";
+import { NotFound } from "./pages/NotFound";
 
 export function Router() {
 
@@ -15,6 +16,7 @@ export function Router() {
                     <Route path="/" element={<Home />} />
                     <Route path="/produto/:id" element={<ProductDetails />} />
                     <Route path="/pedidos" element={<Pedidos />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
         </BrowserRouter>

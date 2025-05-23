@@ -50,7 +50,7 @@ export const ProductInfo = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    min-width: 0; /* Importante para evitar overflow */
+    min-width: 0; 
     max-width: 100%;
     box-sizing: border-box;
     
@@ -150,8 +150,7 @@ export const ProductDescription = styled.p`
     overflow-y: auto;
     width: 100%;
     word-wrap: break-word;
-    
-    /* Estiliza a barra de rolagem para navegadores baseados em WebKit */
+
     &::-webkit-scrollbar {
         width: 6px;
         background: ${({ theme }) => theme["surface"]};
@@ -163,7 +162,6 @@ export const ProductDescription = styled.p`
         border-radius: 4px;
     }
     
-    /* Para Firefox */
     scrollbar-width: thin;
     scrollbar-color: ${({ theme }) => theme["purple-200"]} ${({ theme }) => theme["surface"]};
     
@@ -253,30 +251,51 @@ export const AddToCartButton = styled.button`
 `;
 
 export const ProductNotFoundWrapper = styled.div`
-    margin-top: 8rem;
+    margin: 4rem auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 1rem;
+    padding: 2rem;
     width: 100%;
+    max-width: 70rem;
     box-sizing: border-box;
+    text-align: center;
+    gap: 2rem;
 
     img {
-        width: 30rem;
+        width: 20rem;
         max-width: 90%;
+        height: auto;
+        object-fit: contain;
     }
     
     h1 {
-        margin-top: 2rem;
+        color: ${props => props.theme["purple-300"]};
+        font-size: 2rem;
+        margin: 0;
         text-align: center;
     }
     
-    @media (max-width: 768px) {
-        margin-top: 5rem;
+    @media (max-width: 992px) {
+        margin: 3rem auto;
         
         img {
-            width: 20rem;
+            width: 18rem;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        margin: 2.5rem auto;
+        padding: 1.5rem;
+        gap: 1.5rem;
+        
+        img {
+            width: 16rem;
         }
         
         h1 {
@@ -285,14 +304,26 @@ export const ProductNotFoundWrapper = styled.div`
     }
     
     @media (max-width: 480px) {
-        margin-top: 3rem;
+        margin: 2rem auto;
+        padding: 1rem;
+        gap: 1rem;
         
         img {
-            width: 15rem;
+            width: 14rem;
         }
         
         h1 {
             font-size: 1.25rem;
+        }
+    }
+    
+    @media (max-width: 360px) {
+        img {
+            width: 12rem;
+        }
+        
+        h1 {
+            font-size: 1.1rem;
         }
     }
 `;

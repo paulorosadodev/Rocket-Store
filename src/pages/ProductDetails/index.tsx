@@ -79,7 +79,7 @@ export function ProductDetails() {
     if (error || !product)
         return (
             <ProductNotFoundWrapper>
-                <img src={rocket} />
+                <img src={rocket} alt="Rocket Store Logo" />
                 <h1>{error || "Produto não encontrado"}</h1>
             </ProductNotFoundWrapper>
         );
