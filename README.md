@@ -45,7 +45,7 @@ Rocket Store é uma aplicação web de e-commerce moderna e responsiva, constru�
 ```
 rocket-store/
 ├── src/
-│   ├── components/         # Componentes reutilizáveis de UI (ProductCard, CartModal, Toasts, etc.)
+│   ├── components/         # Componentes reutilizáveis (ProductCard, SuccessToast, etc...)
 │   ├── pages/              # Páginas principais (Home, ProductDetails, Pedidos)
 │   ├── hooks/              # Hooks customizados do React
 │   ├── services/           # Serviços de API e storage local
