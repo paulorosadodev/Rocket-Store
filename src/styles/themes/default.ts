@@ -12,19 +12,8 @@ export const defaultTheme = {
     "purple-800": "#2f234f",
     "purple-900": "#1e1b2e",
 
-    "gray-50": "#f2f2f5",
     "gray-200": "#b3b3c3",
     "gray-500": "#5e5e6f",
-    "gray-700": "#3d3b4f",
-
-    "violet-700": "#4c1d95",
-    "violet-900": "#2e1065",
-
-    "pink-300": "#d66fd1",
-    "pink-500": "#c038b7",
-
-    "blue-300": "#7a9cff",
-    "blue-500": "#5271ff",
 
     "green-400": "#46d7b7",
     "green-600": "#2eac94",
