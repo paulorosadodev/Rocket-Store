@@ -1,11 +1,13 @@
 import { useOutletContext } from "react-router-dom";
+import { useState } from "react";
 
 import type { Product } from "../../@types";
 
 import * as S from "./styles";
 
-import { ProductCarousel } from "../../components/ProductCarousel";
 import { ErrorState } from "../../components/ErrorState";
+import { SuccessToast } from "../../components/SuccessToast";
+import { ProductCarousel } from "../../components/ProductCarousel";
 
 import { useProducts } from "../../hooks/useProducts";
 
@@ -17,10 +19,19 @@ export const Home = () => {
 
     const outletContext = useOutletContext<{ setToast: (msg: string) => void }>();
 
+    const [showAddToCartToast, setShowAddToCartToast] = useState(false);
+
+    function handleAddToCartToast() {
+        setShowAddToCartToast(true);
+    }
+
     const groupedProducts: Record<string, Product[]> = groupProductsByCategory(products);
 
     return (
         <S.HomeWrapper>
+            {showAddToCartToast && (
+                <SuccessToast message="Produto adicionado ao carrinho!" onClose={() => setShowAddToCartToast(false)} />
+            )}
             {loading && (
                 <>
                     {[...Array(3)].map((_, i) => (
@@ -44,6 +55,7 @@ export const Home = () => {
                             title={category}
                             products={groupedProducts[category]}
                             outletContext={outletContext}
+                            onAddToCart={handleAddToCartToast}
                         />
                     ) : null
                 )

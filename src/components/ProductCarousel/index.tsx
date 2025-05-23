@@ -16,9 +16,10 @@ interface ProductCarouselProps {
     products: Product[];
     skeleton?: boolean;
     outletContext?: { setToast: (msg: string) => void };
+    onAddToCart?: () => void;
 }
 
-export function ProductCarousel({ title, products, skeleton, outletContext }: ProductCarouselProps) {
+export function ProductCarousel({ title, products, skeleton, outletContext, onAddToCart }: ProductCarouselProps) {
 
     const carousel = useRef<HTMLDivElement>(null);
 
@@ -155,7 +156,7 @@ export function ProductCarousel({ title, products, skeleton, outletContext }: Pr
                 <S.CarouselInner ref={carousel} onScroll={handleScroll} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseLeave}onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={{ cursor: isDragging ? "grabbing" : "grab" }}>
                     {products.map((product) => (
                         <S.CarouselItem key={product.id}>
-                            <ProductCard product={product} outletContext={outletContext} />
+                            <ProductCard product={product} outletContext={outletContext} onAddToCart={onAddToCart} />
                         </S.CarouselItem>
                     ))}
                 </S.CarouselInner>

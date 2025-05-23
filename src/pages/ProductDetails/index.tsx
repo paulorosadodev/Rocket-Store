@@ -22,6 +22,7 @@ import rocket  from "../../assets/rocket.png";
 
 import { formatPrice } from "../../utils/formatPrice";
 import { ErrorState } from "../../components/ErrorState";
+import { SuccessToast } from "../../components/SuccessToast";
 
 export function ProductDetails() {
 
@@ -34,6 +35,7 @@ export function ProductDetails() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [product, setProduct] = useState<Product | null>(null);
+    const [showAddToCartToast, setShowAddToCartToast] = useState(false);
 
     useEffect(() => {
         if (!id) return;
@@ -65,6 +67,7 @@ export function ProductDetails() {
             image: product.image,
             quantity: 1,
         });
+        setShowAddToCartToast(true);
     }
 
     function handleBuyNow() {
@@ -96,22 +99,27 @@ export function ProductDetails() {
         );
 
     return (
-        <S.ProductDetailsWrapper>
-            <ProductImageContainer src={product.image} alt={product.title} size="large" />
-            <S.ProductInfo>
-                <S.ProductTitle>{product.title}</S.ProductTitle>
-                <S.ProductDescription>{product.description}</S.ProductDescription>
-                <S.ProductPrice>
-                    {formatPrice(product.price)}
-                </S.ProductPrice>
-                <S.ProductActionsWrapper>
-                    <S.ProductActions>
-                        <S.BuyButton onClick={handleBuyNow}>Comprar agora</S.BuyButton>
-                        <S.AddToCartButton onClick={handleAddToCart}>Adicionar ao carrinho</S.AddToCartButton>
-                    </S.ProductActions>
-                </S.ProductActionsWrapper>
-            </S.ProductInfo>
-        </S.ProductDetailsWrapper>
+        <>
+            {showAddToCartToast && (
+                <SuccessToast message="Produto adicionado ao carrinho!" onClose={() => setShowAddToCartToast(false)} variant="cart" />
+            )}
+            <S.ProductDetailsWrapper>
+                <ProductImageContainer src={product.image} alt={product.title} size="large" />
+                <S.ProductInfo>
+                    <S.ProductTitle>{product.title}</S.ProductTitle>
+                    <S.ProductDescription>{product.description}</S.ProductDescription>
+                    <S.ProductPrice>
+                        {formatPrice(product.price)}
+                    </S.ProductPrice>
+                    <S.ProductActionsWrapper>
+                        <S.ProductActions>
+                            <S.BuyButton onClick={handleBuyNow}>Comprar agora</S.BuyButton>
+                            <S.AddToCartButton onClick={handleAddToCart}>Adicionar ao carrinho</S.AddToCartButton>
+                        </S.ProductActions>
+                    </S.ProductActionsWrapper>
+                </S.ProductInfo>
+            </S.ProductDetailsWrapper>
+        </>
     );
 
 }

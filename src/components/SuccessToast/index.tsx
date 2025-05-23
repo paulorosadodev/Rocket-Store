@@ -6,9 +6,10 @@ interface SuccessToastProps {
     message: string;
     onClose: () => void;
     duration?: number;
+    variant?: "success" | "cart";
 }
 
-export function SuccessToast({ message, onClose, duration = 3000 }: SuccessToastProps) {
+export function SuccessToast({ message, onClose, duration = 3000, variant = "success" }: SuccessToastProps) {
 
     useEffect(() => {
 
@@ -18,9 +19,14 @@ export function SuccessToast({ message, onClose, duration = 3000 }: SuccessToast
 
     }, [onClose, duration]);
 
-    return <S.ToastWrapper style={{
-        // @ts-expect-error: Custom CSS property for animation duration
-        "--toast-duration": `${duration}ms`
-    }}>{message}</S.ToastWrapper>;
+    return (
+        <S.ToastWrapper $variant={variant} style={{
+            // @ts-expect-error: Custom CSS property for animation duration
+            "--toast-duration": `${duration}ms`
+        }}>
+            <S.ToastIcon $variant={variant} />
+            {message}
+        </S.ToastWrapper>
+    );
 
 }
