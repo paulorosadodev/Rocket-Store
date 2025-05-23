@@ -1,39 +1,25 @@
-import type { Product } from "../../@types";
 import { useOutletContext } from "react-router-dom";
 
-import { HomeWrapper } from "./styles";
+import type { Product } from "../../@types";
+
+import * as S from "./styles";
 
 import { ProductCarousel } from "../../components/ProductCarousel";
 
 import { useProducts } from "../../hooks/useProducts";
 
+import { groupProductsByCategory, orderedCategories } from "../../utils/categoryUtils";
+
 export const Home = () => {
+
     const { products, loading, error } = useProducts();
+
     const outletContext = useOutletContext<{ setToast: (msg: string) => void }>();
 
-    const groupedProducts: Record<string, Product[]> = {
-        "Vestuário": [],
-        "Eletrônicos": [],
-        "Joalheria": [],
-    };
-
-    products.forEach((product) => {
-        if (
-            product.category === "men's clothing" ||
-            product.category === "women's clothing"
-        ) {
-            groupedProducts["Vestuário"].push(product);
-        } else if (product.category === "electronics") {
-            groupedProducts["Eletrônicos"].push(product);
-        } else if (product.category === "jewelery") {
-            groupedProducts["Joalheria"].push(product);
-        }
-    });
-
-    const orderedCategories = ["Vestuário", "Eletrônicos", "Joalheria"];
+    const groupedProducts: Record<string, Product[]> = groupProductsByCategory(products);
 
     return (
-        <HomeWrapper>
+        <S.HomeWrapper>
             {loading && (
                 <>
                     {[...Array(3)].map((_, i) => (
@@ -59,6 +45,7 @@ export const Home = () => {
                     ) : null
                 )
             }
-        </HomeWrapper>
+        </S.HomeWrapper>
     );
+
 };

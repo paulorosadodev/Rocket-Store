@@ -1,6 +1,8 @@
-import { ProductListWrapper } from "./styles";
-import { ProductCard } from "../ProductCard";
 import type { Product } from "../../@types";
+
+import * as S from "./styles";
+
+import { ProductCard } from "../ProductCard";
 
 interface ProductListProps {
     products: Product[];
@@ -8,10 +10,10 @@ interface ProductListProps {
 
 export function ProductList({ products }: ProductListProps) {
     return (
-        <ProductListWrapper>
+        <S.ProductListWrapper>
             {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
             ))}
-        </ProductListWrapper>
+        </S.ProductListWrapper>
     );
 }

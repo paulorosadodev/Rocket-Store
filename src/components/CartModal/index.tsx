@@ -1,13 +1,20 @@
-import type { CartProduct } from "../../@types";
-import { useCart } from "../../hooks/useCart";
-import { ModalContent, ModalTitle, ModalClose, CartModalWrapper, CartList, CartListItem, CartItemInfo, CartItemTitle, CartItemQuantity, CartItemPrice, RemoveButton, EmptyCartText, CartActionsWrapper, CartTotalRow, CartButtonsRow, ClearButton, CheckoutButton, QuantityButton, MobileOverlay } from "./styles";
-import { ProductImageContainer } from "../ProductImageContainer";
-import { TrashIcon } from "@phosphor-icons/react";
 import { useOutletContext } from "react-router-dom";
+
+import { useCart } from "../../hooks/useCart";
+
+import type { CartProduct } from "../../@types";
+
+import * as S from "./styles";
+
+import { ProductImageContainer } from "../ProductImageContainer";
+
+import { TrashIcon } from "@phosphor-icons/react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
 import { addPedido } from "../../services/storage/pedidosStorage";
 import { triggerPedidosUpdate } from "../../services/storage/pedidosUpdateService";
+
+import { formatPrice } from "../../utils/formatPrice";
 
 interface CartModalProps {
     open: boolean;
@@ -16,6 +23,7 @@ interface CartModalProps {
 }
 
 export function CartModal({ open, onClose, outletContext }: CartModalProps) {
+
     const { isMobile } = useWindowSize();
     const { cart, incrementCart, removeFromCart } = useCart();
 
@@ -56,48 +64,49 @@ export function CartModal({ open, onClose, outletContext }: CartModalProps) {
 
     return (
         <>
-            {isMobile && <MobileOverlay onClick={onClose} />}
-            <CartModalWrapper isMobile={isMobile}>
-                <ModalContent isMobile={isMobile}>
-                    <ModalClose isMobile={isMobile} onClick={onClose} aria-label="Fechar">×</ModalClose>
-                    <ModalTitle isMobile={isMobile}>Meu carrinho</ModalTitle>
+            {isMobile && <S.MobileOverlay onClick={onClose} />}
+            <S.CartModalWrapper isMobile={isMobile}>
+                <S.ModalContent isMobile={isMobile}>
+                    <S.ModalClose isMobile={isMobile} onClick={onClose} aria-label="Fechar">×</S.ModalClose>
+                    <S.ModalTitle isMobile={isMobile}>Meu carrinho</S.ModalTitle>
                     {cart.length === 0 ? (
-                        <EmptyCartText isMobile={isMobile}>Seu carrinho está vazio</EmptyCartText>
+                        <S.EmptyCartText isMobile={isMobile}>Seu carrinho está vazio</S.EmptyCartText>
                     ) : (
                         <>
-                            <CartList isMobile={isMobile}>
+                            <S.CartList isMobile={isMobile}>
                                 {cart.map((item) => (
-                                    <CartListItem isMobile={isMobile} key={item.id}>
+                                    <S.CartListItem isMobile={isMobile} key={item.id}>
                                         <ProductImageContainer src={item.image} alt={item.title} size="small" />
-                                        <CartItemInfo>
-                                            <CartItemTitle>{item.title}</CartItemTitle>
-                                            <CartItemQuantity>
-                                                <QuantityButton isMobile={isMobile} onClick={() => handleDecrement(item)} aria-label="Diminuir quantidade">-</QuantityButton>
+                                        <S.CartItemInfo>
+                                            <S.CartItemTitle>{item.title}</S.CartItemTitle>
+                                            <S.CartItemQuantity>
+                                                <S.QuantityButton isMobile={isMobile} onClick={() => handleDecrement(item)} aria-label="Diminuir quantidade">-</S.QuantityButton>
                                                 Qtd: {item.quantity}
-                                                <QuantityButton isMobile={isMobile} onClick={() => handleIncrement(item)} aria-label="Aumentar quantidade">+</QuantityButton>
-                                            </CartItemQuantity>
-                                            <CartItemPrice>R$ {(item.price * item.quantity).toFixed(2)}</CartItemPrice>
-                                        </CartItemInfo>
-                                        <RemoveButton onClick={() => removeFromCart(item.id)} title="Remover">
+                                                <S.QuantityButton isMobile={isMobile} onClick={() => handleIncrement(item)} aria-label="Aumentar quantidade">+</S.QuantityButton>
+                                            </S.CartItemQuantity>
+                                            <S.CartItemPrice>{formatPrice(item.price * item.quantity)}</S.CartItemPrice>
+                                        </S.CartItemInfo>
+                                        <S.RemoveButton onClick={() => removeFromCart(item.id)} title="Remover">
                                             <TrashIcon size={isMobile ? 24 : 20} weight="bold" />
-                                        </RemoveButton>
-                                    </CartListItem>
+                                        </S.RemoveButton>
+                                    </S.CartListItem>
                                 ))}
-                            </CartList>
-                            <CartActionsWrapper isMobile={isMobile}>
-                                <CartTotalRow isMobile={isMobile}>
+                            </S.CartList>
+                            <S.CartActionsWrapper isMobile={isMobile}>
+                                <S.CartTotalRow isMobile={isMobile}>
                                     <span>Total:</span>
-                                    <span>R$ {total.toFixed(2)}</span>
-                                </CartTotalRow>
-                                <CartButtonsRow isMobile={isMobile}>
-                                    <ClearButton isMobile={isMobile} onClick={handleClear}>Esvaziar</ClearButton>
-                                    <CheckoutButton isMobile={isMobile} onClick={handleCheckout}>Finalizar compra</CheckoutButton>
-                                </CartButtonsRow>
-                            </CartActionsWrapper>
+                                    <span>{formatPrice(total)}</span>
+                                </S.CartTotalRow>
+                                <S.CartButtonsRow isMobile={isMobile}>
+                                    <S.ClearButton isMobile={isMobile} onClick={handleClear}>Esvaziar</S.ClearButton>
+                                    <S.CheckoutButton isMobile={isMobile} onClick={handleCheckout}>Finalizar compra</S.CheckoutButton>
+                                </S.CartButtonsRow>
+                            </S.CartActionsWrapper>
                         </>
                     )}
-                </ModalContent>
-            </CartModalWrapper>
+                </S.ModalContent>
+            </S.CartModalWrapper>
         </>
     );
+
 }

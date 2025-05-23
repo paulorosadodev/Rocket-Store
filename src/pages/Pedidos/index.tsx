@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
-
-import { PedidosWrapper, Title, EmptyText, PedidoCard, PedidoHeader, PedidoId, PedidoDate, PedidoProdutos, ProdutoItem, ProdutoInfo, ProdutoTitle, ProdutoQtd, ProdutoPreco, PedidoFooter, PedidoFooterLabel, PedidoFooterTotal, PedidoListWrapper, ProdutoLink, ProdutoTitleLink, ProdutoImage } from "./styles";
-
-import { getPedidos } from "../../services/storage/pedidosStorage";
-import { getPedidosUpdateCounter } from "../../services/storage/pedidosUpdateService";
-import { useWindowSize } from "../../hooks/useWindowSize";
 
 import type { Pedido } from "../../@types";
 
-function formatDate(dateStr: string) {
-    const d = new Date(dateStr);
-    return d.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
-}
+import * as S from "./styles";
+
+import { getPedidos } from "../../services/storage/pedidosStorage";
+import { getPedidosUpdateCounter } from "../../services/storage/pedidosUpdateService";
+
+import { useWindowSize } from "../../hooks/useWindowSize";
+
+import { formatDate } from "../../utils/formatDate";
+import { formatPrice } from "../../utils/formatPrice";
 
 export default function Pedidos() {
 
+    const { isMobile } = useWindowSize();
+
     const [pedidos, setPedidos] = useState<Pedido[]>([]);
     const [updateCounter, setUpdateCounter] = useState(0);
-    const { isMobile } = useWindowSize();
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -37,57 +38,59 @@ export default function Pedidos() {
     }, [updateCounter]); 
 
     const renderPedido = (pedido: Pedido) => {
+
         const pedidoIdShort = isMobile ? pedido.id.slice(0, 6) : pedido.id.slice(0, 8);
         
         return (
-            <PedidoCard key={pedido.id}>
-                <PedidoHeader>
-                    <PedidoId>Pedido #{pedidoIdShort}</PedidoId>
-                    <PedidoDate>{formatDate(pedido.data)}</PedidoDate>
-                </PedidoHeader>
-                <PedidoProdutos>
+            <S.PedidoCard key={pedido.id}>
+                <S.PedidoHeader>
+                    <S.PedidoId>Pedido #{pedidoIdShort}</S.PedidoId>
+                    <S.PedidoDate>{formatDate(pedido.data)}</S.PedidoDate>
+                </S.PedidoHeader>
+                <S.PedidoProdutos>
                     {pedido.produtos.map(prod => (
-                        <ProdutoItem key={prod.id}>
-                            <ProdutoLink as={Link} to={`/produto/${prod.id}`}>
-                                <ProdutoImage src={prod.image} alt={prod.title} />
-                            </ProdutoLink>
-                            <ProdutoInfo>
-                                <ProdutoTitleLink as={Link} to={`/produto/${prod.id}`}>
-                                    <ProdutoTitle>
+                        <S.ProdutoItem key={prod.id}>
+                            <S.ProdutoLink as={Link} to={`/produto/${prod.id}`}>
+                                <S.ProdutoImage src={prod.image} alt={prod.title} />
+                            </S.ProdutoLink>
+                            <S.ProdutoInfo>
+                                <S.ProdutoTitleLink as={Link} to={`/produto/${prod.id}`}>
+                                    <S.ProdutoTitle>
                                         {isMobile && prod.title.length > 30 
                                             ? `${prod.title.substring(0, 30)}...` 
                                             : prod.title}
-                                    </ProdutoTitle>
-                                </ProdutoTitleLink>
-                                <ProdutoQtd>
+                                    </S.ProdutoTitle>
+                                </S.ProdutoTitleLink>
+                                <S.ProdutoQtd>
                                     {isMobile ? `${prod.quantity}x` : `Qtd: ${prod.quantity}`}
-                                </ProdutoQtd>
-                            </ProdutoInfo>
-                            <ProdutoPreco>
+                                </S.ProdutoQtd>
+                            </S.ProdutoInfo>
+                            <S.ProdutoPreco>
                                 {isMobile && `${prod.quantity}x `}
-                                R$ {(prod.price * prod.quantity).toFixed(2)}
-                            </ProdutoPreco>
-                        </ProdutoItem>
+                                {formatPrice(prod.price * prod.quantity)}
+                            </S.ProdutoPreco>
+                        </S.ProdutoItem>
                     ))}
-                </PedidoProdutos>
-                <PedidoFooter>
-                    <PedidoFooterLabel>Total:</PedidoFooterLabel>
-                    <PedidoFooterTotal>R$ {pedido.total.toFixed(2)}</PedidoFooterTotal>
-                </PedidoFooter>
-            </PedidoCard>
+                </S.PedidoProdutos>
+                <S.PedidoFooter>
+                    <S.PedidoFooterLabel>Total:</S.PedidoFooterLabel>
+                    <S.PedidoFooterTotal>{formatPrice(pedido.total)}</S.PedidoFooterTotal>
+                </S.PedidoFooter>
+            </S.PedidoCard>
         );
     };
 
     return (
-        <PedidosWrapper>
-            <Title>Meus Pedidos</Title>
+        <S.PedidosWrapper>
+            <S.Title>Meus Pedidos</S.Title>
             {pedidos.length === 0 ? (
-                <EmptyText>Você ainda não fez nenhum pedido.</EmptyText>
+                <S.EmptyText>Você ainda não fez nenhum pedido</S.EmptyText>
             ) : (
-                <PedidoListWrapper>
+                <S.PedidoListWrapper>
                     {pedidos.map(renderPedido)}
-                </PedidoListWrapper>
+                </S.PedidoListWrapper>
             )}
-        </PedidosWrapper>
+        </S.PedidosWrapper>
     );
+
 }

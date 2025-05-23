@@ -1,15 +1,17 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
 
-import { ProductCardWrapper, ProductTitle, ProductPrice, AddToCartButton, BuyNowButton } from "./styles";
+import type { CartProduct, Product } from "../../@types";
+
+import * as S from "./styles";
+
 import { ProductImageContainer } from "../ProductImageContainer";
 
-import type { CartProduct, Product } from "../../@types";
+import { formatPrice } from "../../utils/formatPrice";
 
 import { useCart } from "../../hooks/useCart";
 
-import { triggerPedidosUpdate } from "../../services/storage/pedidosUpdateService"; 
-
 import { addPedido } from "../../services/storage/pedidosStorage";
+import { triggerPedidosUpdate } from "../../services/storage/pedidosUpdateService"; 
 
 interface ProductCardProps {
     product: Product;
@@ -56,16 +58,17 @@ export function ProductCard({ product, outletContext }: ProductCardProps) {
     }
 
     return (
-        <ProductCardWrapper onClick={handleCardClick} style={{ cursor: "pointer" }}>
+        <S.ProductCardWrapper onClick={handleCardClick}>
             <ProductImageContainer src={product.image} alt={product.title} size="medium" loading="lazy" />
-            <ProductTitle>{product.title}</ProductTitle>
-            <ProductPrice>R$ {product.price.toFixed(2)}</ProductPrice>
-            <BuyNowButton onClick={e => { e.stopPropagation(); handleBuyNow(); }}>
+            <S.ProductTitle>{product.title}</S.ProductTitle>
+            <S.ProductPrice>{formatPrice(product.price)}</S.ProductPrice>
+            <S.BuyNowButton onClick={e => { e.stopPropagation(); handleBuyNow(); }}>
                 Comprar agora
-            </BuyNowButton>
-            <AddToCartButton onClick={handleAddToCart} onMouseDown={e => e.stopPropagation()}>
+            </S.BuyNowButton>
+            <S.AddToCartButton onClick={handleAddToCart} onMouseDown={e => e.stopPropagation()}>
                 Adicionar ao carrinho
-            </AddToCartButton>
-        </ProductCardWrapper>
+            </S.AddToCartButton>
+        </S.ProductCardWrapper>
     );
+
 }

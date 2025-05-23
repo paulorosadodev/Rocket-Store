@@ -53,6 +53,11 @@ export const SkeletonDetailsWrapper = styled.div`
     }
 `;
 
+export const SkeletonContentContainer = styled.div`
+    flex: 1;
+    width: "100%"
+`;
+
 export const SkeletonTitle = styled.div`
     width: 70%;
     height: 2.2rem;

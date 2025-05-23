@@ -1,23 +1,32 @@
 import { useState, useRef, useEffect } from "react";
-import { ShoppingCartIcon, ListBulletsIcon } from "@phosphor-icons/react";
+
 import { useNavigate } from "react-router-dom";
 
+import { ShoppingCartIcon, ListBulletsIcon } from "@phosphor-icons/react";
+
+import * as S from "./styles";
+
 import logo from "../../assets/logo.png";
-import { useCart } from "../../hooks/useCart";
-import { CartIconContainer, MenuBarWrapper, CartIconWrapper, OrdersIconContainer, MobileTopBar } from "./styles";
+
 import { CartModal } from "../CartModal";
 import { SearchBar } from "../SearchBar";
+
+import { useCart } from "../../hooks/useCart";
 
 interface MenuBarProps {
     setToast?: (msg: string) => void;
 }
 
 export const MenuBar = ({ setToast }: MenuBarProps) => {
-    const { cartCount } = useCart();
-    const [modalOpen, setModalOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
-    const cartIconRef = useRef<HTMLDivElement>(null);
+
     const navigate = useNavigate();
+
+    const { cartCount } = useCart();
+
+    const cartIconRef = useRef<HTMLDivElement>(null);
+
+    const [isMobile, setIsMobile] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         const checkIfMobile = () => {
@@ -34,29 +43,29 @@ export const MenuBar = ({ setToast }: MenuBarProps) => {
     }, []);
 
     const renderCartIcons = () => (
-        <CartIconWrapper ref={cartIconRef}>
-            <OrdersIconContainer onClick={() => navigate("/pedidos")} title="Meus pedidos">
+        <S.CartIconWrapper ref={cartIconRef}>
+            <S.OrdersIconContainer onClick={() => navigate("/pedidos")} title="Meus pedidos">
                 <ListBulletsIcon size={28} weight="bold" />
-            </OrdersIconContainer>
-            <CartIconContainer onClick={() => setModalOpen((v) => !v)} title="Meu carrinho">
+            </S.OrdersIconContainer>
+            <S.CartIconContainer onClick={() => setModalOpen((v) => !v)} title="Meu carrinho">
                 <ShoppingCartIcon id="cart-icon" size={32} />
                 {cartCount > 0 && (
                     <span id="cart-counter">{cartCount}</span>
                 )}
-            </CartIconContainer>
+            </S.CartIconContainer>
             <CartModal 
                 open={modalOpen} 
                 onClose={() => setModalOpen(false)} 
                 outletContext={setToast ? { setToast } : undefined} 
             />
-        </CartIconWrapper>
+        </S.CartIconWrapper>
     );
 
     return (
-        <MenuBarWrapper>
+        <S.MenuBarWrapper>
             {isMobile ? (
                 <>
-                    <MobileTopBar>
+                    <S.MobileTopBar>
                         <img
                             src={logo}
                             alt="Logo da Rocket Store"
@@ -64,7 +73,7 @@ export const MenuBar = ({ setToast }: MenuBarProps) => {
                             onClick={() => navigate("/")}
                         />
                         {renderCartIcons()}
-                    </MobileTopBar>
+                    </S.MobileTopBar>
                     <SearchBar />
                 </>
             ) : (
@@ -79,6 +88,7 @@ export const MenuBar = ({ setToast }: MenuBarProps) => {
                     {renderCartIcons()}
                 </>
             )}
-        </MenuBarWrapper>
+        </S.MenuBarWrapper>
     );
+
 };

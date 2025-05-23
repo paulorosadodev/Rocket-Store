@@ -1,9 +1,14 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-import { CaretRight, CaretLeft } from "@phosphor-icons/react";
+
+import { CaretRightIcon, CaretLeftIcon } from "@phosphor-icons/react";
+
+import type { Product } from "../../@types";
+
+import * as S from "./styles";
+
 import { ProductCard } from "../ProductCard";
 import { ProductCardSkeleton } from "../ProductCard/Skeleton";
-import { CarouselWrapper, CarouselTitle, CarouselContainer, CarouselInner, CarouselItem, CarouselButton, CarouselSideHover } from "./styles";
-import type { Product } from "../../@types";
+
 import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface ProductCarouselProps {
@@ -14,14 +19,17 @@ interface ProductCarouselProps {
 }
 
 export function ProductCarousel({ title, products, skeleton, outletContext }: ProductCarouselProps) {
+
     const carousel = useRef<HTMLDivElement>(null);
-    const [hoverSide, setHoverSide] = useState<"left" | "right" | null>(null);
-    const [canScrollLeft, setCanScrollLeft] = useState(false);
-    const [canScrollRight, setCanScrollRight] = useState(false);
-    const [isDragging, setIsDragging] = useState(false);
+
+    const { width, isMobile } = useWindowSize();
+
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
-    const { width, isMobile } = useWindowSize();
+    const [isDragging, setIsDragging] = useState(false);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(false);
+    const [hoverSide, setHoverSide] = useState<"left" | "right" | null>(null);
 
     const checkScroll = useCallback(() => {
         if (carousel.current) {
@@ -116,68 +124,50 @@ export function ProductCarousel({ title, products, skeleton, outletContext }: Pr
 
     if (skeleton) {
         return (
-            <CarouselWrapper>
-                <CarouselTitle style={{ visibility: "hidden", minHeight: "2.2rem" }}>{title || " "}</CarouselTitle>
-                <CarouselContainer>
-                    <CarouselInner>
+            <S.CarouselWrapper>
+                <S.CarouselTitle style={{ visibility: "hidden", minHeight: "2.2rem" }}>{title || " "}</S.CarouselTitle>
+                <S.CarouselContainer>
+                    <S.CarouselInner>
                         {[...Array(6)].map((_, i) => (
-                            <CarouselItem key={i}>
+                            <S.CarouselItem key={i}>
                                 <ProductCardSkeleton />
-                            </CarouselItem>
+                            </S.CarouselItem>
                         ))}
-                    </CarouselInner>
-                </CarouselContainer>
-            </CarouselWrapper>
+                    </S.CarouselInner>
+                </S.CarouselContainer>
+            </S.CarouselWrapper>
         );
     }
 
     if (!products || !products.length) return null;
 
     return (
-        <CarouselWrapper>
-            <CarouselTitle>{title}</CarouselTitle>
-            <CarouselContainer>
-                <CarouselSideHover
-                    side="left"
-                    onMouseEnter={() => setHoverSide("left")}
-                    onMouseLeave={() => setHoverSide(null)}
-                >
+        <S.CarouselWrapper>
+            <S.CarouselTitle>{title}</S.CarouselTitle>
+            <S.CarouselContainer>
+                <S.CarouselSideHover side="left" onMouseEnter={() => setHoverSide("left")} onMouseLeave={() => setHoverSide(null)}>
                     {(hoverSide === "left" || isMobile) && canScrollLeft && (
-                        <CarouselButton onClick={handleLeftClick} aria-label="Scroll Left">
-                            <CaretLeft size={width <= 480 ? 24 : 32} weight="bold" />
-                        </CarouselButton>
+                        <S.CarouselButton onClick={handleLeftClick} aria-label="Scroll Left">
+                            <CaretLeftIcon size={width <= 480 ? 24 : 32} weight="bold" />
+                        </S.CarouselButton>
                     )}
-                </CarouselSideHover>
-                <CarouselInner 
-                    ref={carousel} 
-                    onScroll={handleScroll}
-                    onMouseDown={handleMouseDown}
-                    onMouseMove={handleMouseMove}
-                    onMouseUp={handleMouseUp}
-                    onMouseLeave={handleMouseLeave}
-                    onTouchStart={handleTouchStart}
-                    onTouchMove={handleTouchMove}
-                    onTouchEnd={handleTouchEnd}
-                    style={{ cursor: isDragging ? "grabbing" : "grab" }}
-                >
+                </S.CarouselSideHover>
+                <S.CarouselInner ref={carousel} onScroll={handleScroll} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseLeave}onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={{ cursor: isDragging ? "grabbing" : "grab" }}>
                     {products.map((product) => (
-                        <CarouselItem key={product.id}>
+                        <S.CarouselItem key={product.id}>
                             <ProductCard product={product} outletContext={outletContext} />
-                        </CarouselItem>
+                        </S.CarouselItem>
                     ))}
-                </CarouselInner>
-                <CarouselSideHover
-                    side="right"
-                    onMouseEnter={() => setHoverSide("right")}
-                    onMouseLeave={() => setHoverSide(null)}
-                >
+                </S.CarouselInner>
+                <S.CarouselSideHover side="right" onMouseEnter={() => setHoverSide("right")} onMouseLeave={() => setHoverSide(null)}>
                     {(hoverSide === "right" || isMobile) && canScrollRight && (
-                        <CarouselButton onClick={handleRightClick} aria-label="Scroll Right">
-                            <CaretRight size={width <= 480 ? 24 : 32} weight="bold" />
-                        </CarouselButton>
+                        <S.CarouselButton onClick={handleRightClick} aria-label="Scroll Right">
+                            <CaretRightIcon size={width <= 480 ? 24 : 32} weight="bold" />
+                        </S.CarouselButton>
                     )}
-                </CarouselSideHover>
-            </CarouselContainer>
-        </CarouselWrapper>
+                </S.CarouselSideHover>
+            </S.CarouselContainer>
+        </S.CarouselWrapper>
     );
+
 }

@@ -125,8 +125,7 @@ export const PedidoProdutos = styled.div`
     @media (max-width: 768px) {
         max-height: 50vh;
         overflow-y: auto;
-        
-        /* Estiliza a barra de rolagem para navegadores baseados em WebKit */
+
         &::-webkit-scrollbar {
             width: 4px;
             background: ${({ theme }) => theme["surface"]};
@@ -138,7 +137,6 @@ export const PedidoProdutos = styled.div`
             border-radius: 2px;
         }
         
-        /* Para Firefox */
         scrollbar-width: thin;
         scrollbar-color: ${({ theme }) => theme["purple-200"]} ${({ theme }) => theme["surface"]};
     }

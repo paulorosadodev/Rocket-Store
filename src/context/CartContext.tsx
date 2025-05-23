@@ -1,7 +1,9 @@
 import { createContext, useState, useEffect } from "react";
+
+import { getCart, setCart } from "../services/storage/cartStorage";
+
 import type { ReactNode } from "react";
 import type { CartProduct } from "../@types";
-import { getCart, setCart } from "../services/storage/cartStorage";
 
 interface CartContextType {
     cart: CartProduct[];
@@ -13,6 +15,7 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+
     const [cart, setCartState] = useState<CartProduct[]>(() => getCart());
 
     useEffect(() => {
@@ -42,6 +45,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             {children}
         </CartContext.Provider>
     );
+
 }
 
 export {CartContext};

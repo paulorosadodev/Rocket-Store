@@ -12,8 +12,10 @@ export const ProductCardWrapper = styled.div`
     min-width: 16rem;
     min-height: 20rem;
     box-sizing: border-box;
+
     &:hover {
         box-shadow: 0 0.25rem 1.5rem rgba(0,0,0,0.18);
+        cursor: pointer;
     }
     
     @media (max-width: 768px) {

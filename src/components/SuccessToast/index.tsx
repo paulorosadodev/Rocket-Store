@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { ToastWrapper } from "./styles";
+
+import * as S from "./styles";
 
 interface SuccessToastProps {
     message: string;
@@ -8,13 +9,18 @@ interface SuccessToastProps {
 }
 
 export function SuccessToast({ message, onClose, duration = 3000 }: SuccessToastProps) {
+
     useEffect(() => {
+
         const timer = setTimeout(onClose, duration);
+
         return () => clearTimeout(timer);
+
     }, [onClose, duration]);
 
-    return <ToastWrapper style={{
+    return <S.ToastWrapper style={{
         // @ts-expect-error: Custom CSS property for animation duration
         "--toast-duration": `${duration}ms`
-    }}>{message}</ToastWrapper>;
+    }}>{message}</S.ToastWrapper>;
+
 }

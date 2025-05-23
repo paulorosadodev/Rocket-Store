@@ -1,31 +1,38 @@
 import { useEffect, useState } from "react";
+
 import { useOutletContext,useParams } from "react-router-dom";
 
 import type { Product } from "../../@types";
 
-import { ProductDetailsWrapper, ProductInfo, ProductTitle, ProductDescription, ProductPrice, ProductActions, BuyButton, AddToCartButton, ProductActionsWrapper, ProductNotFoundWrapper} from "./styles";
+import * as S from "./styles";
+
 import { ProductImageContainer } from "../../components/ProductImageContainer";
 
 import { useCart } from "../../hooks/useCart";
 
-import { triggerPedidosUpdate } from "../../services/storage/pedidosUpdateService"; 
-
 import { fetchProductById } from "../../services/api/products";
+
 import { addPedido } from "../../services/storage/pedidosStorage";
+import { triggerPedidosUpdate } from "../../services/storage/pedidosUpdateService"; 
 import { getProductDetailsCache, setProductDetailsCache } from "../../services/storage/productDetailsCacheStorage";
 
 import { ProductDetailsSkeleton } from "./Skeleton";
 
 import rocket  from "../../assets/rocket.png";
 
+import { formatPrice } from "../../utils/formatPrice";
+
 export function ProductDetails() {
 
     const { id } = useParams<{ id: string }>();
-    const [product, setProduct] = useState<Product | null>(null);
+
+    const { incrementCart } = useCart();
+
+    const outletContext = useOutletContext<{ setToast: (msg: string) => void }>();
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const { incrementCart } = useCart();
-    const outletContext = useOutletContext<{ setToast: (msg: string) => void }>();
+    const [product, setProduct] = useState<Product | null>(null);
 
     useEffect(() => {
         if (!id) return;
@@ -78,33 +85,29 @@ export function ProductDetails() {
 
     if (error || !product)
         return (
-            <ProductNotFoundWrapper>
+            <S.ProductNotFoundWrapper>
                 <img src={rocket} alt="Rocket Store Logo" />
                 <h1>{error || "Produto não encontrado"}</h1>
-            </ProductNotFoundWrapper>
+            </S.ProductNotFoundWrapper>
         );
 
     return (
-        <ProductDetailsWrapper>
+        <S.ProductDetailsWrapper>
             <ProductImageContainer src={product.image} alt={product.title} size="large" />
-            <ProductInfo>
-                <ProductTitle>{product.title}</ProductTitle>
-                <ProductDescription>{product.description}</ProductDescription>
-                <ProductPrice>
-                    {product.price.toLocaleString("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                    })}
-                </ProductPrice>
-                <ProductActionsWrapper>
-                    <ProductActions>
-                        <BuyButton onClick={handleBuyNow}>Comprar agora</BuyButton>
-                        <AddToCartButton onClick={handleAddToCart}>
-                            Adicionar ao carrinho
-                        </AddToCartButton>
-                    </ProductActions>
-                </ProductActionsWrapper>
-            </ProductInfo>
-        </ProductDetailsWrapper>
+            <S.ProductInfo>
+                <S.ProductTitle>{product.title}</S.ProductTitle>
+                <S.ProductDescription>{product.description}</S.ProductDescription>
+                <S.ProductPrice>
+                    {formatPrice(product.price)}
+                </S.ProductPrice>
+                <S.ProductActionsWrapper>
+                    <S.ProductActions>
+                        <S.BuyButton onClick={handleBuyNow}>Comprar agora</S.BuyButton>
+                        <S.AddToCartButton onClick={handleAddToCart}>Adicionar ao carrinho</S.AddToCartButton>
+                    </S.ProductActions>
+                </S.ProductActionsWrapper>
+            </S.ProductInfo>
+        </S.ProductDetailsWrapper>
     );
+
 }

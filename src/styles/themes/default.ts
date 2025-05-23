@@ -1,4 +1,6 @@
+
 export const defaultTheme = {
+
     "white": "#f9f9fc",
     "white-dark": "#e6e6f2",
 
@@ -33,4 +35,5 @@ export const defaultTheme = {
     "background": "#14121c",
     "surface": "#1c1926",
     "black": "#1a1820"
+
 };

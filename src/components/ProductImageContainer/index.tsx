@@ -1,4 +1,4 @@
-import { ProductImageWrapper, ProductImage } from "./styles";
+import * as S from "./styles";
 
 interface ProductImageContainerProps {
     src: string;
@@ -9,8 +9,8 @@ interface ProductImageContainerProps {
 
 export function ProductImageContainer({ src, alt, size = "medium", loading }: ProductImageContainerProps) {
     return (
-        <ProductImageWrapper size={size}>
-            <ProductImage src={src} alt={alt} loading={loading} />
-        </ProductImageWrapper>
+        <S.ProductImageWrapper size={size}>
+            <S.ProductImage src={src} alt={alt} loading={loading} />
+        </S.ProductImageWrapper>
     );
 }
